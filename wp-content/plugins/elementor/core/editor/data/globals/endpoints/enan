@@ -1,0 +1,74 @@
+#include <iostream>
+#include <string>
+#include <iomanip> // for formatting output
+
+using namespace std;
+
+const int NUM_STUDENTS = 100;
+
+struct Student {
+    string name;
+    string sexCode; // "M" for Male, "F" for Female
+    float quizScores[3]; // Scores for 3 quizzes
+};
+
+// Function to input data for all students
+void inputStudentData(Student students[]) {
+    for (int i = 0; i < NUM_STUDENTS; i++) {
+        cout << "Enter details for student " << i + 1 << endl;
+        
+        cout << "Enter Name: ";
+        cin.ignore(); // to ignore any leftover newline characters from previous input
+        getline(cin, students[i].name);
+        
+        cout << "Enter SexCode (M/F): ";
+        cin >> students[i].sexCode;
+        
+        // Validate sexCode
+        while (students[i].sexCode != "M" && students[i].sexCode != "F") {
+            cout << "Invalid input. Please enter 'M' for Male or 'F' for Female: ";
+            cin >> students[i].sexCode;
+        }
+
+        cout << "Enter scores for 3 quizzes (separated by spaces): ";
+        for (int j = 0; j < 3; j++) {
+            cin >> students[i].quizScores[j];
+        }
+        
+        cout << endl;
+    }
+}
+
+// Function to display student data
+void displayStudentData(const Student students[]) {
+    cout << setw(5) << left << "No." 
+         << setw(20) << "Name" 
+         << setw(10) << "SexCode" 
+         << setw(10) << "Quiz1" 
+         << setw(10) << "Quiz2" 
+         << setw(10) << "Quiz3" << endl;
+    
+    cout << "--------------------------------------------------------" << endl;
+    
+    for (int i = 0; i < NUM_STUDENTS; i++) {
+        cout << setw(5) << i + 1
+             << setw(20) << students[i].name
+             << setw(10) << students[i].sexCode
+             << setw(10) << fixed << setprecision(2) << students[i].quizScores[0]
+             << setw(10) << fixed << setprecision(2) << students[i].quizScores[1]
+             << setw(10) << fixed << setprecision(2) << students[i].quizScores[2] << endl;
+    }
+}
+
+// Main function
+int main() {
+    Student students[NUM_STUDENTS]; // Array to store 100 students' data
+    
+    // Input data for students
+    inputStudentData(students);
+    
+    // Display data for students
+    displayStudentData(students);
+    
+    return 0;
+}
